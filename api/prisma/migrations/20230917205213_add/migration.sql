@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Patient" ALTER COLUMN "foodPlan" DROP NOT NULL,
+ALTER COLUMN "recipes" DROP NOT NULL,
+ALTER COLUMN "tips" DROP NOT NULL;

@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-1.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Patient {
+  name          String
+  id            Int          @id @default(autoincrement())
+  lastname      String
+  email         String       @unique
+  nutritionist  Nutritionist @relation(fields: [patientId], references: [id])
+  patientId     Int
+  tips          String?
+  recipes       Json?
+  age           Int
+  weight        String
+  height        String
+  objective     String
+  first_consult DateTime     @default(now())
+  dni           Int          @unique
+  location      String
+  foodPlan      Json?
+  PatientUser   PatientUser? @relation(fields: [patientUserId], references: [id])
+  patientUserId Int?
+}
+
+model Nutritionist {
+  id       Int       @id @default(autoincrement())
+  name     String
+  lastname String
+  email    String    @unique
+  password String
+  patients Patient[]
+  location String
+}
+
+model PatientUser {
+  id       Int       @id @default(autoincrement())
+  name     String
+  lastname String
+  email    String    @unique
+  password String
+  patients Patient[]
+}

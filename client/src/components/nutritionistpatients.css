@@ -1,0 +1,10 @@
+/* Nutritionistpatients.css */
+.form-container {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 1s ease-in-out;
+}
+
+.form-container.open {
+  max-height: 1000px; /* Ajusta esta altura según tus necesidades */
+}
