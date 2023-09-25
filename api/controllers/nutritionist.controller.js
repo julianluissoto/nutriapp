@@ -69,13 +69,24 @@ const loginNutritionist = async (req, res) => {
     if (!passwordMatch) {
       return res.status(401).json({ error: "Invalid password" });
     }
-
+    req.session.nutritionistId = nutritionist.id;
     // If the email and password are correct, you can return the nutritionist data
     res.json({ nutritionist });
   } catch (error) {
     console.error("Error during nutritionist login:", error);
     res.status(500).json({ error: "Error during nutritionist login" });
   }
+};
+const nutriLogout = (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Error destroying session:", err);
+      res.status(500).json({ error: "Error logging out" });
+    } else {
+      res.clearCookie("connect.sid"); // Clear the session cookie
+      res.status(202).json({ message: "Logged out successfully" });
+    }
+  });
 };
 
 const getNutritionistPatientByPatientId = async (req, res) => {
@@ -114,4 +125,5 @@ export {
   getNutritionistPatientByPatientId,
   getAllNutritionists,
   loginNutritionist,
+  nutriLogout,
 };

@@ -13,7 +13,7 @@ datasource db {
 
 model Patient {
   name          String
-  id            Int          @id @default(autoincrement())
+  id            Int          @unique
   lastname      String
   email         String       @unique
   nutritionist  Nutritionist @relation(fields: [patientId], references: [id])

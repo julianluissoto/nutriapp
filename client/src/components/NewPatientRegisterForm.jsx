@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function NewPatientRegisterForm({ nutriId }) {
   const navigate = useNavigate();
-  console.log(nutriId);
 
   const {
     handleSubmit,
@@ -19,17 +18,14 @@ export default function NewPatientRegisterForm({ nutriId }) {
       ...data,
       nutritionist_Id: nutriId,
     };
-    console.log("formated data", formateddata);
+
     try {
-      const result = await axios.post(
-        "http://localhost:3000/patients",
-        formateddata
-      );
+      const result = await axios.post("/patients", formateddata);
 
       if (result.statusText === "OK")
         Swal.fire("Perfecto!", "Paciente agregado correctamente", "success");
       reset();
-      navigate("/");
+      navigate("/nutripatients");
     } catch (error) {
       console.log(error);
     }

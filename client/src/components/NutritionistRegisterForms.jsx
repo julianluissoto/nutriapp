@@ -66,10 +66,7 @@ const NutritionistRegisterForms = () => {
 
     try {
       // Send registration data to the server
-      const response = await axios.post(
-        "http://localhost:3000/nutritionist",
-        formData
-      );
+      const response = await axios.post("/nutritionist", formData);
       if (response.statusText === "OK")
         Swal.fire("Perfecto!", "Nueva Nutricionista creada", "success");
       setFormData(initialFormData);
@@ -84,7 +81,7 @@ const NutritionistRegisterForms = () => {
   };
 
   return (
-    <div className="bg-blue-300 p-4 rounded-md first:max-w-lg m-auto">
+    <div className="bg-blue-300 p-4 mt-[15%] rounded-md w-1/2 first:max-w-lg m-auto">
       <h2 className="text-white mb-4 font-semibold">
         Registro de nuevo Nutricionista
       </h2>
@@ -149,7 +146,7 @@ const NutritionistRegisterForms = () => {
         <input
           type="password"
           name="confirmPassword"
-          placeholder="Confirm Password"
+          placeholder="Confirme su contraseña"
           onChange={handleChange}
           value={formData.confirmPassword}
           required
@@ -161,7 +158,7 @@ const NutritionistRegisterForms = () => {
         <input
           type="text"
           name="location"
-          placeholder="enter location"
+          placeholder="ingrese su localidad"
           onChange={handleChange}
           value={formData.location}
           required
@@ -172,7 +169,7 @@ const NutritionistRegisterForms = () => {
           type="submit"
           className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg focus:outline-none focus:ring focus:ring-blue-200"
         >
-          Register
+          Registrarme
         </button>
       </form>
     </div>

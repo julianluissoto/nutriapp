@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
-const userSignUp = async (req, res) => {
+/* const userSignUp = async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -42,47 +42,47 @@ const userSignUp = async (req, res) => {
 
     res.status(500).json({ error: "Error al crear usuario" });
   }
-};
+}; */
 
 const userLogin = async (req, res) => {
-  const { email, password } = req.body;
-  console.log("login, :", email, password);
+  const { email, userID } = req.body;
+  console.log("login, :", email, userID);
   try {
     // Find the user by email in the database
-    const user = await prisma.patientUser.findUnique({
-      where: { email },
+    const user = await prisma.patient.findUnique({
+      where: { email, id: parseInt(userID) },
     });
+    console.log(user);
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    // Compare the provided password with the hashed password in the database
-    const passwordMatch = await bcrypt.compare(password, user.password);
-
-    if (!passwordMatch) {
-      return res.status(401).json({ error: "Invalid password" });
-    }
-
-    // If the email and password are correct, retrieve the patient information
-    const patient = await prisma.patient.findUnique({
-      where: { email },
-    });
-
-    if (!patient) {
-      return res.status(404).json({ error: "Patient not found" });
-    }
-
-    // Return the patient information or any other data you need
-    res.json({ patient });
+    res.json({ user });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ error: "Error during login" });
   }
 };
-const getUserData = (req, res) => {
+const getUserData = async (req, res) => {
+  const { id } = req.params;
+
   try {
-  } catch (error) {}
+    const patients = await prisma.patient.findMany({
+      where: {
+        nutritionist: {
+          id: parseInt(id),
+        },
+      },
+    });
+
+    res.json({ patients });
+  } catch (error) {
+    console.error("Error al recuperar los datos del usuario", error);
+    res.status(500).json({
+      error: "Ocurrió un error al recuperar los datos del usuario",
+    });
+  }
 };
 
-export { userLogin, getUserData, userSignUp };
+export { userLogin, getUserData /* userSignUp */ };

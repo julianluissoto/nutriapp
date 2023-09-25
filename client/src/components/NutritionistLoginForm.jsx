@@ -31,10 +31,7 @@ const NutritionistLoginForm = () => {
 
     try {
       // Send login data to the server
-      const response = await axios.post(
-        "http://localhost:3000/nutrilogin",
-        formData
-      );
+      const response = await axios.post("nutrilogin", formData);
       const nutriDataPatients = response.data.nutritionist;
 
       // Assuming the server returns a success status
@@ -42,7 +39,7 @@ const NutritionistLoginForm = () => {
         Swal.fire("Success!", "Logged in successfully", "success");
         // Redirect the user to the dashboard or any other page after successful login
         setUser({ nutriDataPatients });
-        navigate("/");
+        navigate("/nutripatients");
       } else {
         // Handle unsuccessful login (e.g., display an error message)
         Swal.fire("Error", "Invalid email or password", "error");
@@ -54,7 +51,7 @@ const NutritionistLoginForm = () => {
   };
 
   return (
-    <div className="bg-blue-300 p-4 mt-8 rounded-md max-w-lg m-auto">
+    <div className="bg-blue-300 p-4 mt-[25%] rounded-md max-w-lg m-auto">
       <h2 className="text-white mb-4 font-semibold">Login</h2>
       <form onSubmit={handleSubmit} className="flex flex-col">
         <input

@@ -2,10 +2,13 @@ import { Router } from "express";
 const router = Router();
 
 import {
-  getPatientsByNutritionistId,
+  //getPatientsByNutritionistId,
   deletepatient,
   createNewPatient,
   updatePatient,
+  // getNutriPlanByUserId,
+  getPatientById,
+  getPatientsByNutritionistId,
 } from "../controllers/patients.controller.js";
 
 import {
@@ -13,21 +16,24 @@ import {
   getAllNutritionists,
   loginNutritionist,
   getNutritionistPatientByPatientId,
+  nutriLogout,
 } from "../controllers/nutritionist.controller.js";
 
 import { getUserData } from "../controllers/patients-user.controller.js";
-router.get("/patient", getNutritionistPatientByPatientId);
-router.get("/patient/:id", getPatientsByNutritionistId);
-router.get("/nutritionists", getAllNutritionists);
-router.get("/nutritionist/:id", getPatientsByNutritionistId);
-router.get("/user/", getUserData);
+import { isAuthenticated } from "../middleware/nutriAuth.js";
+router
+  .get("/patients", getNutritionistPatientByPatientId)
+  .get("/patients/:id", getPatientById)
+  .get("/nutripatients/:id", getPatientsByNutritionistId)
 
-router.post("/patients", createNewPatient);
-router.post("/nutritionist", createNewNutritionist);
-router.post("/nutrilogin", loginNutritionist);
-
-router.delete("/patient/:id", deletepatient);
-
-router.put("/patient/:id", updatePatient);
+  .get("/nutritionists", getAllNutritionists)
+  //.get("/nutritionist/:id", isAuthenticated, getPatientsByNutritionistId)
+  .get("/users", getUserData)
+  .get("/logout", nutriLogout)
+  .post("/patients", createNewPatient)
+  .post("/nutritionists", createNewNutritionist)
+  .post("/nutrilogin", loginNutritionist)
+  .delete("/patient/:id", deletepatient)
+  .put("/patient/:id", updatePatient);
 
 export default router;

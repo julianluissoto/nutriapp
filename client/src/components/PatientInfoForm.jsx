@@ -18,7 +18,7 @@ const PatientInfoForm = ({ id, onFormSubmit }) => {
     e.preventDefault();
     try {
       // Send the additional patient information to the server
-      await axios.put(`http://localhost:3000/patient/${id}`, {
+      await axios.put(`patients/${id}`, {
         food_plan: JSON.stringify(formData.food_plan),
         tips: formData.tips,
         recipies: JSON.stringify(formData.recipes),
